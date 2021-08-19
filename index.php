@@ -78,12 +78,12 @@
 
 
 
-    <section style=" padding-top:250px; padding-bottom:145px; background-color: #1b1b1b;">
+    <section style=" padding-top:50px; padding-bottom:145px; background-color: #1b1b1b;">
 
         <div class="container sec1-dmush1">
             <div class="row">
                 <div class="col align-self-start">
-                    <img src="./images/PngItem_5092096.png" alt="">
+                    <img src="./images/ipad.png" alt="">
                 </div>
                 <div class="col align-self-center">
                     <h1 class="text-left scale-in-center"> <span class="green-color"> About</span>
@@ -822,9 +822,13 @@
 
 
         });
-        setTimeout(function() {
-            $('#exampleModalCenter').modal();
-        }, 5000);
+
+
+        // Open Subscribe Form Modal
+        
+        // setTimeout(function() {
+        //     $('#exampleModalCenter').modal();
+        // }, 000);
 
         $(window).scroll(function() {
             var wh = $(window).height() - 50;
@@ -851,6 +855,7 @@
             var wh = $(window).height() - 50;
             if ($(window).scrollTop() > $('.sec1-dmush4').offset().top - wh) {
                 $('.sec1-dmush4').addClass('fade-in-center');
+                $('#exampleModalCenter').modal();
             }
         });
 
