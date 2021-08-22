@@ -52,11 +52,13 @@
                         <form>
                             <div class="form-group">
                                 <label>Type your device name</label>
-                                <input type="text" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename" ng-keypress="searchdevice()" autocomplete="false">
+                                <input type="text" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename" ng-keypress="searchdevice()" ng-blur="hideResultDiv()" autocomplete="false">
 
-                                <div id="search_div">
+                                <div id="search_div" style="position:absolute; width:100%" >
                                     <center> <img src="images/loading.svg" id="loader" class="text-center" alt="" width="30px" style="display: none;"></center>
+                                   <div class="searchlist" >
                                     <a href="#" ng-repeat="device in devicesfound" class="search_feed ">{{device.device_name}} </a>
+                                    </div>
                                 </div>
 
                             </div>
@@ -767,8 +769,12 @@
         var app = angular.module('myApp', []);
         app.controller('myController', function($scope, $http, $window, $location) {
 
+            document.getElementById("search_div").style.display = 'none';
 
-
+            $scope.hideResultDiv = () =>{
+                document.getElementById("search_div").style.display = 'none';
+            }
+            
             $scope.searchdevice = function() {
                 document.getElementById("loader").style.display = 'block';
                 if ($scope.devicename != "") {
@@ -777,6 +783,7 @@
                             'devicename': $scope.devicename,
                         }
                     ).then(function(response) {
+                        document.getElementById("search_div").style.display = 'block';
                         $scope.devicesfound = response.data;
                         setTimeout(function() {
 
@@ -830,6 +837,7 @@
         //     $('#exampleModalCenter').modal();
         // }, 000);
 
+        var isOpen = 0;
         $(window).scroll(function() {
             var wh = $(window).height() - 50;
             if ($(window).scrollTop() > $('.sec1-dmush1').offset().top - wh) {
@@ -855,7 +863,6 @@
             var wh = $(window).height() - 50;
             if ($(window).scrollTop() > $('.sec1-dmush4').offset().top - wh) {
                 $('.sec1-dmush4').addClass('fade-in-center');
-                $('#exampleModalCenter').modal();
             }
         });
 
@@ -863,6 +870,11 @@
             var wh = $(window).height() - 50;
             if ($(window).scrollTop() > $('.sec1-dmush5').offset().top - wh) {
                 $('.sec1-dmush5').addClass('scale-in-center');
+                if(isOpen == 0){
+                    isOpen = 1;
+                    $('#exampleModalCenter').modal();
+                }
+                
             }
         });
 
