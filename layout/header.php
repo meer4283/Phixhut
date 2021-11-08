@@ -62,3 +62,4 @@
             </div>
         </div>
     </div>
+    <script src="https://kit.fontawesome.com/df3a5524fa.js" crossorigin="anonymous"></script>

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="./src/css/style.css">
-    <script src="./src/js/script.js"></script>
+   
 
 
     <link href="css/themify-icons.css" rel="stylesheet">
@@ -23,15 +23,17 @@
     <link href="css/default.css" rel="stylesheet" id="color_theme">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.js" type="text/javascript"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28//angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/EaselPlugin.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 
-<body class="hero-anime" ng-app="myApp" ng-controller="myController">
-
+<body class="hero-anime" ng-app="myApp" ng-controller="myController" onload="web_loader()">
+    <div id="web-loader"></div>
     <!-- Header  -->
 
     <?php require_once('./layout/header.php'); ?>
@@ -41,23 +43,23 @@
 
 
 
-    <section id="home" class="home-banner theme-bg  kenburns-top bg-effect">
+    <section id="home" class="home-banner theme-bg  ">
         <div id="particles_effect" class="particles-effect"></div>
         <div class="container">
             <div class="row justify-content-center align-items-center">
 
-                <div class="headerBox">
+                <div class="headerBox" id="header-mobile">
                     <div class="rotate-content">
                         <h1>So,You've smashed your device..</h1>
                         <form>
                             <div class="form-group">
                                 <label>Type your device name</label>
-                                <input type="text" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename" ng-keypress="searchdevice()" ng-blur="hideResultDiv()" autocomplete="false">
+                                <input type="text" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename" ng-keypress="searchdevice()"  autocomplete="false">
 
                                 <div id="search_div" style="position:absolute; width:100%" >
                                     <center> <img src="images/loading.svg" id="loader" class="text-center" alt="" width="30px" style="display: none;"></center>
                                    <div class="searchlist" >
-                                    <a href="#" ng-repeat="device in devicesfound" class="search_feed ">{{device.device_name}} </a>
+                                    <a href="repair.php?device={{device.slug}}" ng-repeat="device in devicesfound" class="search_feed ">{{device.device_name}} </a>
                                     </div>
                                 </div>
 
@@ -85,18 +87,18 @@
         <div class="container sec1-dmush1">
             <div class="row">
                 <div class="col align-self-start">
-                    <img src="./images/ipad.png" alt="">
+                    <img id="second-section-mobile-img" src="./images/ipad.png" alt="">
                 </div>
                 <div class="col align-self-center">
-                    <h1 class="text-left scale-in-center"> <span class="green-color"> About</span>
+                    <h1 class="text-left  second-second-anim "> <span class="green-color"> About</span>
                         Us </h1><br>
-                    <p style="color:#fff;">Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod
+                    <p class="second-second-anim" style="color:#fff;">Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod
                         tempor incididunt ut
                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
                         voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet conse
                         ctetur adipisicing elit, sed do eiusmod.</p><br>
-                    <a href="#" class="button">About Us</a>
+                    <a  href="#" class="button second-second-anim">About Us</a>
                 </div>
             </div>
         </div>
@@ -105,9 +107,9 @@
         <br>
 
 
-        <h1>Why Choose Us ?</h1>
+        <h1 class="third-second-anim">Why Choose Us ?</h1>
         <br>
-        <div class="container">
+        <div class="container third-second-anim">
             <div class="row">
                 <div class="col-1">
                     <img src="./images/gsm2-step-1.png" alt="">
@@ -175,7 +177,7 @@
 
 
 
-                <div class="col-4">
+                <div class="col-4 fourth-section-first-card-anim">
                     <div class="card card-repair" style="width: 18rem;">
                         <img class="card-img-top" src="https://apps.tsn.go.tz/public/uploads/adcf136b6856fd92d3078569b84f55e5.jpg" alt="Card image cap">
                         <div class="image-overlay"></div>
@@ -188,7 +190,7 @@
                 </div>
 
 
-                <div class="col-4">
+                <div class="col-4 fourth-section-second-card-anim">
                     <div class="card card-repair" style="width: 18rem;">
                         <img class="card-img-top" src="https://apps.tsn.go.tz/public/uploads/adcf136b6856fd92d3078569b84f55e5.jpg" alt="Card image cap">
                         <div class="image-overlay"></div>
@@ -201,7 +203,7 @@
                 </div>
 
 
-                <div class="col-4">
+                <div class="col-4 fourth-section-third-card-anim">
                     <div class="card card-repair" style="width: 18rem;">
                         <img class="card-img-top" src="https://apps.tsn.go.tz/public/uploads/adcf136b6856fd92d3078569b84f55e5.jpg" alt="Card image cap">
                         <div class="image-overlay"></div>
@@ -342,40 +344,43 @@
         <div class="container sec1-dmush3">
 
             <div class="container">
-                <h1 class="text-center grey"> <span class="white-color"> Products </span>
-                    Combo </h1>
+                <h1 class="text-center grey"> <span class="white-color"> Most Book </span>
+                    Service </h1>
                 <br>
                 <br>
 
                 <div class="row001">
-                    <div class="column001">
+                    <div class="column001 fifth-section-anim">
                         <div class="card001">
-                            <img src="./images/Combo.png" height="auto" width="300px">
-                            <h3>Screen Replacement + Ear Piece Repair (Combo)</h3>
+                        <a href="frequent-order.php?device=samsung-note-10&order=2">   
+                        <img src="./images/Combo.png" height="auto" width="300px">
+                            <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
                             <p style="color:red;"><strong>Special Offer*<strong></p>
-                            <p>Price: £329.00</p>
+                            <p style="color:#313131;">Price: £329.00</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="column001 fifth-section-anim">
+                        <div class="card001">
+                        <a href="frequent-order.php?device=samsung-note-10&order=2">   
+                        <img src="./images/Combo.png" height="auto" width="300px">
+                            <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
+                            <p style="color:red;"><strong>Special Offer*<strong></p>
+                            <p style="color:#313131;">Price: £329.00</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="column001 fifth-section-anim">
+                        <div class="card001">
+                        <a href="frequent-order.php?device=samsung-note-10&order=2">   
+                        <img src="./images/Combo.png" height="auto" width="300px">
+                            <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
+                            <p style="color:red;"><strong>Special Offer*<strong></p>
+                            <p style="color:#313131;">Price: £329.00</p>
+                            </a>
                         </div>
                     </div>
 
-                    <div class="column001">
-                        <div class="card001">
-                            <img src="./images/Combo.png" height="auto" width="300px">
-                            <h3>Screen Replacement + Ear Piece Repair (Combo)</h3>
-                            <p style="color:red;"><strong>Special Offer*<strong></p>
-                            <p>Price: £329.00</p>
-                        </div>
-                    </div>
-
-
-
-                    <div class="column001">
-                        <div class="card001">
-                            <img src="./images/Combo.png" height="auto" width="300px">
-                            <h3>Screen Replacement + Ear Piece Repair (Combo)</h3>
-                            <p style="color:red;"><strong>Special Offer*<strong></p>
-                            <p>Price: £329.00</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -581,15 +586,15 @@
     <section style="padding-left:5%;padding-right:5%;background-image:url(./images/gsm2-cta-bg-pattern.png);background-repeat:repeat;background-position:left top;">
         <div class="container-xl sec1-dmush4">
             <div class="row">
-                <div class="col">
+                <div class="col sixth-section-first-col">
                     <img src="./images/gsm2-cta-laptop.png" alt="">
                 </div>
-                <div class="col align-self-center">
+                <div class="col align-self-center sixth-section-second-col">
                     <h2 class="text-center white-color"> <span class="green-color">Contact </span>us if you want
                         to repair your
                         device really fast</h2>
                 </div>
-                <div class="col align-self-center text-center">
+                <div class="col align-self-center text-center sixth-section-third-col">
                     <h2 class="text-center white-color">+34 544 444 444</h2><br>
                     <a href="#" class="button ">Write to us</a>
                 </div>
@@ -608,7 +613,7 @@
 
 
 
-        <div class="container-lg">
+        <div class="container-lg seveth-section-anim">
             <div class="row">
                 <div class="col">
                     <figure class="snip1518">
@@ -838,33 +843,33 @@
         // }, 000);
 
         var isOpen = 0;
-        $(window).scroll(function() {
-            var wh = $(window).height() - 50;
-            if ($(window).scrollTop() > $('.sec1-dmush1').offset().top - wh) {
-                $('.sec1-dmush1').addClass('scale-in-center');
-            }
-        });
+        // $(window).scroll(function() {
+        //     var wh = $(window).height() - 50;
+        //     if ($(window).scrollTop() > $('.sec1-dmush1').offset().top - wh) {
+        //         $('.sec1-dmush1').addClass('scale-in-center');
+        //     }
+        // });
 
-        $(window).scroll(function() {
-            var wh = $(window).height() - 50;
-            if ($(window).scrollTop() > $('.sec1-dmush2').offset().top - wh) {
-                $('.sec1-dmush2').addClass('scale-in-center');
-            }
-        });
+        // $(window).scroll(function() {
+        //     var wh = $(window).height() - 50;
+        //     if ($(window).scrollTop() > $('.sec1-dmush2').offset().top - wh) {
+        //         $('.sec1-dmush2').addClass('scale-in-center');
+        //     }
+        // });
 
-        $(window).scroll(function() {
-            var wh = $(window).height() - 50;
-            if ($(window).scrollTop() > $('.sec1-dmush3').offset().top - wh) {
-                $('.sec1-dmush3').addClass('scale-in-center');
-            }
-        });
+        // $(window).scroll(function() {
+        //     var wh = $(window).height() - 50;
+        //     if ($(window).scrollTop() > $('.sec1-dmush3').offset().top - wh) {
+        //         $('.sec1-dmush3').addClass('scale-in-center');
+        //     }
+        // });
 
-        $(window).scroll(function() {
-            var wh = $(window).height() - 50;
-            if ($(window).scrollTop() > $('.sec1-dmush4').offset().top - wh) {
-                $('.sec1-dmush4').addClass('fade-in-center');
-            }
-        });
+        // $(window).scroll(function() {
+        //     var wh = $(window).height() - 50;
+        //     if ($(window).scrollTop() > $('.sec1-dmush4').offset().top - wh) {
+        //         $('.sec1-dmush4').addClass('fade-in-center');
+        //     }
+        // });
 
         $(window).scroll(function() {
             var wh = $(window).height() - 50;
@@ -878,19 +883,27 @@
             }
         });
 
-        $(window).scroll(function() {
-            var wh = $(window).height() - 50;
-            if ($(window).scrollTop() > $('.sec1-dmush6').offset().top - wh) {
-                $('.sec1-dmush6').addClass('scale-in-center');
-            }
-        });
+        // $(window).scroll(function() {
+        //     var wh = $(window).height() - 50;
+        //     if ($(window).scrollTop() > $('.sec1-dmush6').offset().top - wh) {
+        //         $('.sec1-dmush6').addClass('scale-in-center');
+        //     }
+        // });
 
-        $(window).scroll(function() {
-            var wh = $(window).height() - 50;
-            if ($(window).scrollTop() > $('.sec1-dmush7').offset().top - wh) {
-                $('.sec1-dmush7').addClass('scale-in-center');
-            }
-        });
+        // $(window).scroll(function() {
+        //     var wh = $(window).height() - 50;
+        //     if ($(window).scrollTop() > $('.sec1-dmush7').offset().top - wh) {
+        //         $('.sec1-dmush7').addClass('scale-in-center');
+        //     }
+        // });
+
+    const web_loader = () =>{
+        var preloader = document.getElementById('web-loader')
+        preloader.style.display="none";
+    }
+    
+
+
     </script>
 
 
@@ -904,7 +917,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
+    <script src="./src/js/script.js"></script>
 
 
     <div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

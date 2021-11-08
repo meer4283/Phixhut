@@ -1,4 +1,51 @@
 
+.box-shadow {
+
+  box-shadow: 1px 0px 34px -3px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 1px 0px 34px -3px rgba(0,0,0,0.1);
+  -moz-box-shadow: 1px 0px 34px -3px rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: 10px;
+}
+.option-zipcode{
+  margin: 5px;
+  padding: 50px 5px;
+  border-radius: 20px;
+  color: white;
+}
+.option-zipcode i{
+  color:#fff;
+  font-size: 40px;
+}
+
+.white-bg{
+ 
+  background-color: #fff !important;
+}
+.dark-bg{
+  background-color: #1b1b1b !important;
+}
+
+.service-select{
+  border: 1px solid #ced4da;
+  border-radius: 10px !important;
+}
+.repair-field{
+  height: 50px;
+}
+
+#web-loader{
+  width: 100%;
+  height: 100vh;
+  background: #1b1b1b url('../images/Eclipse-1s-200px.svg');
+  position: fixed;
+  z-index: 99999;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.dark-color-text{
+  color:#1b1b1b;
+}
 .theme-bg{
   background-image:url("../images/top_header_bg.png");
   background-repeat: no-repeat;
@@ -208,7 +255,7 @@
   color:#fff;
 }
 .form-group .form-control{
-    border: 2px solid #000;
+   
    font-family: 'Poppins', sans-serif;
 }
 .counter-col .count{
@@ -559,7 +606,9 @@ button:focus{
 .service-effect:hover .overlay {
   width: 100%;
 }
-
+.text-white{
+  color: #fff;
+}
 .text{
   color: white;
   font-size: 20px;

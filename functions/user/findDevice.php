@@ -26,6 +26,7 @@ if(mysqli_num_rows($run)>0){
     while($row=mysqli_fetch_array($run)){
         $temp=array();
         $temp['device_name']=$row['device_name'];
+        $temp['slug']=$row['slug'];
         
         
         array_push($output,$temp);
