@@ -40,27 +40,31 @@
 
     <!-- Header End -->
 
+<style>
+    #search_div{
+        max-height: 100px;
+        overflow-y: scroll;
+        position: relative;
+    }
+</style>
 
 
-
-    <section id="home" class="home-banner theme-bg  ">
+    <section id="home" class="home-banner theme-bg  kenburns-top bg-effect">
         <div id="particles_effect" class="particles-effect"></div>
         <div class="container">
             <div class="row justify-content-center align-items-center">
 
-                <div class="headerBox" id="header-mobile">
+                <div class="headerBox">
                     <div class="rotate-content">
                         <h1>So,You've smashed your device..</h1>
-                        <form>
+                        <form autocomplete="off">
                             <div class="form-group">
                                 <label>Type your device name</label>
-                                <input type="text" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename" ng-keypress="searchdevice()"  autocomplete="false">
+                                <input autocomplete="off" type="search" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename"  ng-keyup="searchdevice()" autocomplete="false">
 
-                                <div id="search_div" style="position:absolute; width:100%" >
+                                <div id="search_div">
                                     <center> <img src="images/loading.svg" id="loader" class="text-center" alt="" width="30px" style="display: none;"></center>
-                                   <div class="searchlist" >
-                                    <a href="repair.php?device={{device.slug}}" ng-repeat="device in devicesfound" class="search_feed ">{{device.device_name}} </a>
-                                    </div>
+                                    <a tabindex="-1" id="{{device.slug}}" href="repair.php?device={{device.slug}}" ng-repeat="device in devicesfound" class="search_feed ">{{device.device_name}} </a>
                                 </div>
 
                             </div>
@@ -352,7 +356,7 @@
                 <div class="row001">
                     <div class="column001 fifth-section-anim">
                         <div class="card001">
-                        <a href="frequent-order.php?device=samsung-note-10&order=2">   
+                        <a href="most-booked.php?device=samsung-note-10&order=2">   
                         <img src="./images/Combo.png" height="auto" width="300px">
                             <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
                             <p style="color:red;"><strong>Special Offer*<strong></p>
@@ -362,7 +366,7 @@
                     </div>
                     <div class="column001 fifth-section-anim">
                         <div class="card001">
-                        <a href="frequent-order.php?device=samsung-note-10&order=2">   
+                        <a href="most-booked.php?device=samsung-note-10&order=2">   
                         <img src="./images/Combo.png" height="auto" width="300px">
                             <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
                             <p style="color:red;"><strong>Special Offer*<strong></p>
@@ -372,7 +376,7 @@
                     </div>
                     <div class="column001 fifth-section-anim">
                         <div class="card001">
-                        <a href="frequent-order.php?device=samsung-note-10&order=2">   
+                        <a href="most-booked.php?device=samsung-note-10&order=2">   
                         <img src="./images/Combo.png" height="auto" width="300px">
                             <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
                             <p style="color:red;"><strong>Special Offer*<strong></p>
@@ -770,32 +774,41 @@
     <!-- Footer End -->
 
 
-    <script>
+
+
+<script>
         var app = angular.module('myApp', []);
         app.controller('myController', function($scope, $http, $window, $location) {
 
-            document.getElementById("search_div").style.display = 'none';
+            //document.getElementById("search_div").style.display = 'none';
 
             $scope.hideResultDiv = () =>{
                 document.getElementById("search_div").style.display = 'none';
             }
             
-            $scope.searchdevice = function() {
-                document.getElementById("loader").style.display = 'block';
+            $scope.searchdevice = async () => {
+                console.log("helllo");
+            //    document.getElementById("loader").style.display = 'block';
+                
                 if ($scope.devicename != "") {
-                    $http.post(
+                   await $http.post(
                         "functions/user/findDevice.php", {
                             'devicename': $scope.devicename,
                         }
                     ).then(function(response) {
-                        document.getElementById("search_div").style.display = 'block';
+                         document.getElementById("search_div").style.display = 'block';
                         $scope.devicesfound = response.data;
-                        setTimeout(function() {
+                        console.log($scope.devicesfound);
+                       
+                        // setTimeout(function() {
+                        //     autocomplete(document.getElementById("myInput"), $scope.devicesfound);
+                           
+                        //    // document.getElementById("loader").style.display = 'none';
+                        // }, 1500);
 
-                            console.log($scope.devicesfound);
-                            document.getElementById("loader").style.display = 'none';
-                        }, 1500);
-
+                         let divId = $scope.devicesfound[0].slug;
+                         console.log(divId);
+                         $(`#${divId}`).focus(); 
 
 
                     });
@@ -850,6 +863,24 @@
         //     }
         // });
 
+//         document.addEventListener('keydown', function(e) {
+//     switch (e.keyCode) {
+//         case 37:
+//             // alert('left');
+//             break;
+//         case 38:
+//         //    alert('up');
+//             break;
+//         case 39:
+//             // alert('right');
+//             break;
+//         case 40:
+//             // alert('down');
+//             $('#searchlist')[0].scrollIntoView();
+//             break;
+//     }
+// });
+
         // $(window).scroll(function() {
         //     var wh = $(window).height() - 50;
         //     if ($(window).scrollTop() > $('.sec1-dmush2').offset().top - wh) {
@@ -901,15 +932,8 @@
         var preloader = document.getElementById('web-loader')
         preloader.style.display="none";
     }
-    
-
-
+  
     </script>
-
-
-
-
-
 
 
 

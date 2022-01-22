@@ -91,6 +91,47 @@ if (isset($_GET['device'])) {
                     <br>
                     <button type="submit" class="btn button repair-button">PROCEED</button>
                 </form>
+
+                <form id="select-service-form2" ng-submit="chech_eg()" style="display:none;">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Zipcode</label>
+                            <input type="text" class="form-control box-shadow repair-field" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="zipcode" ng-model="zipcode">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <button type="submit" class="btn button repair-button">CHECK</button>
+                        <!-- <center><button type="submit" class="button second-second-anim" style="transform: translate(0px, 0px); opacity: 1;">Check</a></center> -->
+                    </form>
+<br>
+                    <div class="container third-second-anim" style="opacity: 1;">
+            <div class="row">
+
+                <div id="onsite" class="col-5 green-bg text-center option-zipcode" style="display: none;">
+                    <i aria-hidden="true" class="fa fa-map-marker"></i>
+                    <h6>OnSite Repair</h6>
+                    <p>Device repair on your location, house</p>
+                    <a href="#" class="dark-bg btn button repair-button">Select</a>
+                </div>
+
+                <div id="pickup" class="col-5 green-bg text-center option-zipcode" style="display: none;">
+                    <i aria-hidden="true" class="fas fa-truck-pickup"></i>
+                    <h6>Pickup Repair</h6>
+                    <p>Device will be pick and droped from your location</p>
+                    <a href="#" class="dark-bg btn button repair-button">Select</a>
+                </div>
+
+
+                <div id="postal" class="col-5 green-bg text-center option-zipcode" style="display: none;">
+                    <i aria-hidden="true" class="fas fa-mail-bulk"></i>
+                    <h6>Postal Repair</h6>
+                    <p>Deliver mobile through envolope sent from us.</p>
+                    <a href="#" class="dark-bg btn button repair-button">Select</a>
+                </div>
+
+
+
+
+            </div>
+        </div>
             </div>
         </div>
 
@@ -99,7 +140,7 @@ if (isset($_GET['device'])) {
 
 
 
-
+<!-- 
     <section id="findzip" style=" padding-top:100px; padding-bottom:145px; background-color: #1b1b1b;">
 
         <div class="container sec1-dmush1">
@@ -116,8 +157,9 @@ if (isset($_GET['device'])) {
                             <input type="text" class="form-control box-shadow repair-field" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="zipcode" ng-model="zipcode">
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
-                        <center><button type="submit" class="button second-second-anim" style="transform: translate(0px, 0px); opacity: 1;">Check</a></center>
+                        <button type="submit" class="button second-second-anim" style="transform: translate(0px, 0px); opacity: 1; border:none;">Check</a>
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -157,7 +199,7 @@ if (isset($_GET['device'])) {
             </div>
         </div>
 
-    </section>
+    </section> -->
 
 
     <!-- Site footer -->
@@ -195,11 +237,12 @@ if (isset($_GET['device'])) {
                 //     // $scope.services = response.data;
                 // });
 
-                $('html, body').animate({
-                    scrollTop: $("#findzip").offset().top
-                }, 2000);
+                // $('html, body').animate({
+                //     scrollTop: $("#findzip").offset().top
+                // }, 2000);
 
-                //select-service-form
+                document.getElementById('select-service-form').style.display = 'none'; //
+                document.getElementById('select-service-form2').style.display = 'block'; //
 
 
             }
@@ -244,6 +287,8 @@ if (isset($_GET['device'])) {
                         //swal("You are eligible for our mail in service ", "", "success");
                         
                         document.getElementById('postal').style.display = 'block';
+
+                        
 
                     } else {
                         swal("Egligibility Not Found", "", "error");
