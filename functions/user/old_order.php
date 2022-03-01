@@ -20,6 +20,7 @@ if(mysqli_num_rows($run)>0){
     while($row=mysqli_fetch_array($run)){
         $temp=array();
         $temp['service_id']=$row['service_id'];
+        $temp['service_cost']=$row['service_cost'];
         array_push($output,$temp);
     }
    

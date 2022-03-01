@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="./src/css/style.css">
-   
+
 
 
     <link href="css/themify-icons.css" rel="stylesheet">
@@ -40,13 +40,13 @@
 
     <!-- Header End -->
 
-<style>
-    #search_div{
-        max-height: 100px;
-        overflow-y: scroll;
-        position: relative;
-    }
-</style>
+    <style>
+        #search_div {
+            max-height: 100px;
+            overflow-y: scroll;
+            position: relative;
+        }
+    </style>
 
 
     <section id="home" class="home-banner theme-bg  kenburns-top bg-effect">
@@ -57,15 +57,22 @@
                 <div class="headerBox">
                     <div class="rotate-content">
                         <h1>So,You've smashed your device..</h1>
-                        <form autocomplete="off">
+                        <form autocomplete="off" ng-submit="formSubmit()">
                             <div class="form-group">
                                 <label>Type your device name</label>
-                                <input autocomplete="off" type="search" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename"  ng-keyup="searchdevice()" autocomplete="false">
+                                <!-- <input autocomplete="off" type="search" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename"  ng-keyup="searchdevice()" autocomplete="false">
 
                                 <div id="search_div">
                                     <center> <img src="images/loading.svg" id="loader" class="text-center" alt="" width="30px" style="display: none;"></center>
                                     <a tabindex="-1" id="{{device.slug}}" href="repair.php?device={{device.slug}}" ng-repeat="device in devicesfound" class="search_feed ">{{device.device_name}} </a>
-                                </div>
+                                </div> -->
+                                <input autocomplete="off" type="search" name="name" oninput='onInput()' class="form-control" placeholder="e.g Iphone X" ng-model="devicename" id="search-input" ng-keyup="searchdevice()" autocomplete="false" list="brow">
+                                <datalist id="brow" ng-model="device_name_slug">
+                                    <option value="{{device.device_name}}" ng-repeat="device in devicesfound">
+
+                                </datalist>
+
+
 
                             </div>
                             <p>If you don't know what device you have,You can use our image selector</p>
@@ -102,7 +109,7 @@
                         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
                         voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet conse
                         ctetur adipisicing elit, sed do eiusmod.</p><br>
-                    <a  href="#" class="button second-second-anim">About Us</a>
+                    <a href="#" class="button second-second-anim">About Us</a>
                 </div>
             </div>
         </div>
@@ -356,31 +363,31 @@
                 <div class="row001">
                     <div class="column001 fifth-section-anim">
                         <div class="card001">
-                        <a href="most-booked.php?device=samsung-note-10&order=2">   
-                        <img src="./images/Combo.png" height="auto" width="300px">
-                            <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
-                            <p style="color:red;"><strong>Special Offer*<strong></p>
-                            <p style="color:#313131;">Price: £329.00</p>
+                            <a href="most-booked.php?device=samsung-note-10&order=2">
+                                <img src="./images/Combo.png" height="auto" width="300px">
+                                <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
+                                <p style="color:red;"><strong>Special Offer*<strong></p>
+                                <p style="color:#313131;">Price: £329.00</p>
                             </a>
                         </div>
                     </div>
                     <div class="column001 fifth-section-anim">
                         <div class="card001">
-                        <a href="most-booked.php?device=samsung-note-10&order=2">   
-                        <img src="./images/Combo.png" height="auto" width="300px">
-                            <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
-                            <p style="color:red;"><strong>Special Offer*<strong></p>
-                            <p style="color:#313131;">Price: £329.00</p>
+                            <a href="most-booked.php?device=samsung-note-10&order=2">
+                                <img src="./images/Combo.png" height="auto" width="300px">
+                                <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
+                                <p style="color:red;"><strong>Special Offer*<strong></p>
+                                <p style="color:#313131;">Price: £329.00</p>
                             </a>
                         </div>
                     </div>
                     <div class="column001 fifth-section-anim">
                         <div class="card001">
-                        <a href="most-booked.php?device=samsung-note-10&order=2">   
-                        <img src="./images/Combo.png" height="auto" width="300px">
-                            <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
-                            <p style="color:red;"><strong>Special Offer*<strong></p>
-                            <p style="color:#313131;">Price: £329.00</p>
+                            <a href="most-booked.php?device=samsung-note-10&order=2">
+                                <img src="./images/Combo.png" height="auto" width="300px">
+                                <h3 style="color:#313131;">Screen Replacement + Ear Piece Repair (Combo)</h3>
+                                <p style="color:red;"><strong>Special Offer*<strong></p>
+                                <p style="color:#313131;">Price: £329.00</p>
                             </a>
                         </div>
                     </div>
@@ -776,39 +783,46 @@
 
 
 
-<script>
+    <script>
         var app = angular.module('myApp', []);
         app.controller('myController', function($scope, $http, $window, $location) {
 
             //document.getElementById("search_div").style.display = 'none';
+            $scope.takeToRepair = () => {
+                console.log("helllllo");
+                var slug = convertToSlug($scope.device_name_slug);
+                console.log(slug);
+                window.location.href = `repair.php?device=${slug}`;
+            }
 
-            $scope.hideResultDiv = () =>{
+
+
+
+            $scope.hideResultDiv = () => {
                 document.getElementById("search_div").style.display = 'none';
             }
-            
+
             $scope.searchdevice = async () => {
                 console.log("helllo");
-            //    document.getElementById("loader").style.display = 'block';
-                
+                //    document.getElementById("loader").style.display = 'block';
+
                 if ($scope.devicename != "") {
-                   await $http.post(
+                    await $http.post(
                         "functions/user/findDevice.php", {
                             'devicename': $scope.devicename,
                         }
                     ).then(function(response) {
-                         document.getElementById("search_div").style.display = 'block';
+                        //  document.getElementById("search_div").style.display = 'block';
                         $scope.devicesfound = response.data;
                         console.log($scope.devicesfound);
-                       
+
                         // setTimeout(function() {
                         //     autocomplete(document.getElementById("myInput"), $scope.devicesfound);
-                           
+
                         //    // document.getElementById("loader").style.display = 'none';
                         // }, 1500);
 
-                         let divId = $scope.devicesfound[0].slug;
-                         console.log(divId);
-                         $(`#${divId}`).focus(); 
+                        let divId = $scope.devicesfound[0].slug;
 
 
                     });
@@ -846,11 +860,35 @@
             }
 
 
+            function convertToSlug(string) {
+                return string
+                    .toString()
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/[^\w\-]+/g, "")
+                    .replace(/\-\-+/g, "-")
+                    .replace(/^-+/, "")
+                    .replace(/-+$/, "");
+            }
+
+
+            $scope.formSubmit = () => {
+                console.log($scope.devicename);
+
+                var slug = convertToSlug($scope.devicename);
+                console.log(slug);
+                window.location.href = `repair.php?device=${slug}`;
+            }
+
+
         });
 
 
+
+
         // Open Subscribe Form Modal
-        
+
         // setTimeout(function() {
         //     $('#exampleModalCenter').modal();
         // }, 000);
@@ -863,23 +901,23 @@
         //     }
         // });
 
-//         document.addEventListener('keydown', function(e) {
-//     switch (e.keyCode) {
-//         case 37:
-//             // alert('left');
-//             break;
-//         case 38:
-//         //    alert('up');
-//             break;
-//         case 39:
-//             // alert('right');
-//             break;
-//         case 40:
-//             // alert('down');
-//             $('#searchlist')[0].scrollIntoView();
-//             break;
-//     }
-// });
+        //         document.addEventListener('keydown', function(e) {
+        //     switch (e.keyCode) {
+        //         case 37:
+        //             // alert('left');
+        //             break;
+        //         case 38:
+        //         //    alert('up');
+        //             break;
+        //         case 39:
+        //             // alert('right');
+        //             break;
+        //         case 40:
+        //             // alert('down');
+        //             $('#searchlist')[0].scrollIntoView();
+        //             break;
+        //     }
+        // });
 
         // $(window).scroll(function() {
         //     var wh = $(window).height() - 50;
@@ -906,11 +944,11 @@
             var wh = $(window).height() - 50;
             if ($(window).scrollTop() > $('.sec1-dmush5').offset().top - wh) {
                 $('.sec1-dmush5').addClass('scale-in-center');
-                if(isOpen == 0){
+                if (isOpen == 0) {
                     isOpen = 1;
                     $('#exampleModalCenter').modal();
                 }
-                
+
             }
         });
 
@@ -928,11 +966,37 @@
         //     }
         // });
 
-    const web_loader = () =>{
-        var preloader = document.getElementById('web-loader')
-        preloader.style.display="none";
-    }
-  
+        const web_loader = () => {
+            var preloader = document.getElementById('web-loader')
+            preloader.style.display = "none";
+        }
+
+        function convertToSlug(string) {
+            return string
+                .toString()
+                .trim()
+                .toLowerCase()
+                .replace(/\s+/g, "-")
+                .replace(/[^\w\-]+/g, "")
+                .replace(/\-\-+/g, "-")
+                .replace(/^-+/, "")
+                .replace(/-+$/, "");
+        }
+        const onInput = () => {
+            var val = document.getElementById("search-input").value;
+            var opts = document.getElementById('brow').childNodes;
+            for (var i = 0; i < opts.length; i++) {
+                if (opts[i].value === val) {
+                    // An item was selected from the list!
+                    // yourCallbackHere()
+                    var slug = convertToSlug(opts[i].value);
+                    console.log(slug);
+                    window.location.href = `repair.php?device=${slug}`;
+                    //  alert(opts[i].value);
+                    break;
+                }
+            }
+        }
     </script>
 
 
@@ -957,7 +1021,7 @@
 
                 <div class="modal-body" class="subscribe_form">
 
-                  
+
 
                     <br>
                     <div class="container">

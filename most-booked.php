@@ -217,22 +217,26 @@ if (isset($_GET['device'])) {
         app.controller('myController', function($scope, $http, $window, $location) {
             $scope.TotalCost = 0;
             $scope.cartArray = [];
+            $scope.myCount = 1;
 
             $scope.onLoad = () => {
-                console.log("gezfsdf")
+               
                 $scope.getDeviceDetails();
-
+                $scope.autoSelect();
+               
 
             }
-            $scope.autoSelect = () =>{
+            $scope.autoSelect = async () =>{
+               
+                console.log("autoSelect running");
                 $scope.old_order_id = '<?php echo $_GET['order']; ?>';
                 $scope.old_order_id = parseInt($scope.old_order_id);
-                $http.post(
+               await $http.post(
                     "functions/user/old_order.php", {
                         'order_id': $scope.old_order_id,
                     }
                 ).then(function(response) {
-                        console.log(response.data)
+                        console.log("old Data", response.data)
                     $scope.old_service_selected = response.data;
                     var old_service_selected = response.data;
                     let arrayLength = $scope.old_service_selected.length;
@@ -242,31 +246,19 @@ if (isset($_GET['device'])) {
                         var checkbox_id = `service_checkbox_${old_service_selected[i].service_id}`;
                         console.log(checkbox_id);
                          document.getElementById(checkbox_id).checked = true;
-                     
-                        // $scope.checkbox_id.checked = true;
-                        //     console.log(checkbox_id);
-                        
-                        //document.getElementById('service_checkbox_1').checked = true;
+                         console.log($scope.myCount);
+                       if($scope.myCount == 1){
+                        $scope.ShowHide(old_service_selected[i].service_id, old_service_selected[i].service_cost);
+                        $scope.myCount ++;
+                       }
+                         
                    
                 }
                 });
             }
 
             $scope.addToCart = (service_id, service_cost, ) => {
-                //$scope.chech_eg();
 
-                // $http.post(
-                //     "functions/user/addToCart.php", {
-                //         'cart': $scope.cartArray,
-                //     }
-                // ).then(function(response) {
-                //     console.log(response.data);
-                //     // $scope.services = response.data;
-                // });
-
-                // $('html, body').animate({
-                //     scrollTop: $("#findzip").offset().top
-                // }, 2000);
                 $scope.autoSelect();
                 document.getElementById('select-service-form').style.display = 'none'; //
                 document.getElementById('select-service-form2').style.display = 'block'; //
@@ -325,6 +317,27 @@ if (isset($_GET['device'])) {
                 });
 
             }
+
+
+            // $scope.onFirstLoad = () =>{
+            //     console.log("onFirstLoad running");
+            //     $scope.old_order_id = '<?php echo $_GET['order']; ?>';
+            //     $scope.old_order_id = parseInt($scope.old_order_id);
+            //     $http.post(
+            //         "functions/user/old_order.php", {
+            //             'order_id': $scope.old_order_id,
+            //         }
+            //     ).then(function(response) {
+            //             console.log("onFirstLoad Data", response.data)
+            //         $scope.old_service_selected = response.data;
+            //         var old_service_selected = response.data;
+            //         let arrayLength = $scope.old_service_selected.length;
+            //        // document.getElementById('service_checkbox_1').checked = true;
+            //         for (i = 0; arrayLength > i; i++) {
+            //        $scope.ShowHide(old_service_selected[i].service_id, old_service_selected[i].service_cost);
+            //   }
+            //     });
+            // }
 
 
             $scope.ShowHide = function(service_id, cost) {
