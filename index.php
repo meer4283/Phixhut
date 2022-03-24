@@ -437,7 +437,7 @@
             z-index: 2;
             width: 100%;
             position: absolute;
-            bottom: -100px;
+            bottom: -104px !important;
             transition: all 0.7s ease;
             display: flex;
             flex-direction: column;
