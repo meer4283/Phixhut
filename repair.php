@@ -92,7 +92,7 @@ if (isset($_GET['device'])) {
                 <div id="select-service-form2" style="display:none;">
                     <form ng-submit="chech_eg_form()">
                         <div class="form-group">
-                            <a href="#" ng-click="step1()"><strong>Go Back </strong></a>
+                            <a href="#" class="dark-bg btn button repair-button" ng-click="step1()">Go Back</a>
                             <br>
                             <label for="exampleInputEmail1">Zipcode</label>
                             <input type="text" class="form-control box-shadow repair-field" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="zipcode" ng-model="zipcode">
@@ -370,12 +370,12 @@ if (isset($_GET['device'])) {
 
 
                     } else {
-                        swal("Egligibility Not Found", "", "error");
+                        //swal("Egligibility Not Found", "", "error");
                         document.getElementById('onsite').style.display = 'none';
                         document.getElementById('pickup').style.display = 'none';
                         //swal("You are eligible for our mail in service ", "", "success");
 
-                        document.getElementById('postal').style.display = 'none';
+                        document.getElementById('postal').style.display = 'block';
                     }
 
 
