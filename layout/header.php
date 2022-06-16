@@ -5,7 +5,7 @@
                 <div class="col-9">
                     <nav class="navbar navbar-expand-md navbar-light">
 
-                        <a class="navbar-brand" href="index.php" target="_blank">
+                        <a class="navbar-brand" href="index.php" >
                             <img src="./images/logo.png"
                                 alt=""></a>
 

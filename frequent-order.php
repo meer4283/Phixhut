@@ -69,7 +69,7 @@ if (isset($_GET['device'])) {
             <div class="col">
 
 
-        
+
                 <img src="{{deviceDetail.device_img}}" alt="Lamp" width="500" style="text-align: center;">
             </div>
             <div class="col">
@@ -102,7 +102,7 @@ if (isset($_GET['device'])) {
 
                     <p>
                         <button ng-click="autoSelect()" class="btn btn-block btn-primary box-shadow repair-field white-bg text-left" style="border: none; color:#1b1b1b;" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                           Select Services
+                            Select Services
                         </button>
                     </p>
                     <div class="collapse" id="collapseExample">
@@ -212,10 +212,10 @@ if (isset($_GET['device'])) {
                 console.log("gezfsdf")
                 $scope.getDeviceDetails();
                 //   document.getElementById("service_checkbox_1").checked = true;
-               $scope.autoSelect();
+                $scope.autoSelect();
             }
 
-            $scope.autoSelect = () =>{
+            $scope.autoSelect = () => {
                 $scope.old_order_id = '<?php echo $_GET['order']; ?>';
                 $scope.old_order_id = parseInt($scope.old_order_id);
                 $http.post(
@@ -223,23 +223,23 @@ if (isset($_GET['device'])) {
                         'order_id': $scope.old_order_id,
                     }
                 ).then(function(response) {
-                        console.log(response.data)
+                    console.log(response.data)
                     $scope.old_service_selected = response.data;
                     var old_service_selected = response.data;
                     let arrayLength = $scope.old_service_selected.length;
-                   // document.getElementById('service_checkbox_1').checked = true;
+                    // document.getElementById('service_checkbox_1').checked = true;
                     for (i = 0; arrayLength > i; i++) {
-                    
+
                         var checkbox_id = `service_checkbox_${old_service_selected[i].service_id}`;
                         console.log(checkbox_id);
-                         document.getElementById(checkbox_id).checked = true;
-                     
+                        document.getElementById(checkbox_id).checked = true;
+
                         // $scope.checkbox_id.checked = true;
                         //     console.log(checkbox_id);
-                        
+
                         //document.getElementById('service_checkbox_1').checked = true;
-                   
-                }
+
+                    }
                 });
 
 
@@ -260,8 +260,8 @@ if (isset($_GET['device'])) {
                 $('html, body').animate({
                     scrollTop: $("#findzip").offset().top
                 }, 2000);
-               // document.getElementById('service_checkbox_1').checked = true;
-               $scope.autoSelect();
+                // document.getElementById('service_checkbox_1').checked = true;
+                $scope.autoSelect();
 
             }
 
@@ -360,7 +360,7 @@ if (isset($_GET['device'])) {
                 ).then(function(response) {
                     console.log(response.data);
                     $scope.services = response.data;
-             });
+                });
             }
 
 
@@ -384,9 +384,15 @@ if (isset($_GET['device'])) {
         });
 
 
-        const web_loader = () => {
-            var preloader = document.getElementById('web-loader')
-            preloader.style.display = "none";
+        const web_loader = (action) => {
+            if (action) {
+                var preloader = document.getElementById('web-loader')
+                preloader.style.display = "block";
+            } else {
+                var preloader = document.getElementById('web-loader')
+                preloader.style.display = "none";
+            }
+
         }
     </script>
 

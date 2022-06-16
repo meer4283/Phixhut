@@ -155,11 +155,27 @@
     border-radius: 20px;
     margin-top: 3px;
 }
+        #search_div {
+            /* max-height: 100px; */
+            overflow-y: scroll;
+            position: absolute;
+    width: 100%;
+        }
+.search_div_box{
 
+}
+
+.search_feed_span{
+	display: block;
+	padding: 10px;
+}
 .search_feed{
-    display: block;
+    display: inline-block;
     color: darkslategray;
     padding-left: 10px;
+}
+.intro{
+	background-color: rgb(202, 202, 202);
 }
 /* #Navigation
 ================================================== */

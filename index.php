@@ -39,16 +39,6 @@
     <?php require_once('./layout/header.php'); ?>
 
     <!-- Header End -->
-
-    <style>
-        #search_div {
-            max-height: 100px;
-            overflow-y: scroll;
-            position: relative;
-        }
-    </style>
-
-
     <section id="home" class="home-banner theme-bg  kenburns-top bg-effect">
         <div id="particles_effect" class="particles-effect"></div>
         <div class="container">
@@ -60,17 +50,22 @@
                         <form autocomplete="off" ng-submit="formSubmit()">
                             <div class="form-group">
                                 <label>Type your device name</label>
-                                <!-- <input autocomplete="off" type="search" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename"  ng-keyup="searchdevice()" autocomplete="false">
+                                <input autocomplete="off" type="search" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename" ng-keyup="searchdevice($event)" autocomplete="false" ng-keydown="myFunc($event)" ng-blur="searchRemove()">
 
-                                <div id="search_div">
-                                    <center> <img src="images/loading.svg" id="loader" class="text-center" alt="" width="30px" style="display: none;"></center>
-                                    <a tabindex="-1" id="{{device.slug}}" href="repair.php?device={{device.slug}}" ng-repeat="device in devicesfound" class="search_feed ">{{device.device_name}} </a>
-                                </div> -->
-                                <input autocomplete="off" type="search" name="name" oninput='onInput()' class="form-control" placeholder="e.g Iphone X" ng-model="devicename" id="search-input" ng-keyup="searchdevice()" autocomplete="false" list="brow">
+                                <div id="search_div" class="search_div_box">
+                                    <span class="search_feed_span" ng-repeat="device in devicesfound" id="{{device.slug}}">
+                                        <!-- <center> <img src="images/loading.svg" id="loader" class="text-center" alt="" width="30px" style="display: none;"></center> -->
+                                        <img src="{{device.device_img}}" height="20px" width="auto" alt="" style="display:inline-block">
+                                        <a tabindex="-1" href="repair.php?device={{device.slug}}" class="search_feed ">{{device.device_name}} </a>
+                                    </span>
+                                </div>
+
+
+                                <!-- <input autocomplete="off" type="search" name="name" oninput='onInput()' class="form-control" placeholder="e.g Iphone X" ng-model="devicename" id="search-input" ng-keyup="searchdevice()" autocomplete="false" list="brow">
                                 <datalist id="brow" ng-model="device_name_slug">
                                     <option value="{{device.device_name}}" ng-repeat="device in devicesfound">
 
-                                </datalist>
+                                </datalist> -->
 
 
 
@@ -237,14 +232,6 @@
 
 
 
-
-
-
-
-
-
-
-
     <!-- Blog SEction -->
     <style>
         .snip1518 {
@@ -336,12 +323,6 @@
     </style>
 
 
-
-
-
-
-
-
     <section class="comb" style="padding-bottom:75px
                         
                         ;padding-top:55px;padding-bottom:75px ;
@@ -400,15 +381,6 @@
 
 
     </section>
-
-
-
-
-
-
-
-
-
 
     <style>
         .portfolio {
@@ -781,12 +753,16 @@
     <!-- Footer End -->
 
 
+    <script>
+
+    </script>
 
 
     <script>
         var app = angular.module('myApp', []);
         app.controller('myController', function($scope, $http, $window, $location) {
 
+            $scope.searchItemCount = 0;
             //document.getElementById("search_div").style.display = 'none';
             $scope.takeToRepair = () => {
                 console.log("helllllo");
@@ -796,39 +772,87 @@
             }
 
 
+            $scope.searchRemove = () => {
+                //  $scope.hideResultDiv();
+            }
 
 
             $scope.hideResultDiv = () => {
                 document.getElementById("search_div").style.display = 'none';
             }
+            $scope.showResultDiv = () => {
+                document.getElementById("search_div").style.display = 'block';
+            }
 
-            $scope.searchdevice = async () => {
+            $scope.myFunc = (event) => {
+                console.log(event.key);
+                if (event.key == 'ArrowDown' && $scope.devicesfound.length > 0) {
+
+                    if ($scope.searchItemCount > 0) {
+                        var idsec = `#${$scope.devicesfound[$scope.searchItemCount-1].slug}`;
+                        $(idsec).removeClass("intro");
+                    }
+                    var id = `#${$scope.devicesfound[$scope.searchItemCount].slug}`;
+                    console.log(id)
+                    $(id).addClass("intro");
+                    $scope.devicename = $scope.devicesfound[$scope.searchItemCount].device_name;
+
+                    $scope.searchItemCount++;
+
+                }
+                if (event.key == 'ArrowUp' && $scope.devicesfound.length > 0) {
+                    console.log('arrow up');
+                    if ($scope.searchItemCount > 0) {
+                        var idsec = `#${$scope.devicesfound[$scope.searchItemCount+1].slug}`;
+                        console.log("idsec", idsec)
+                        $(idsec).removeClass("intro");
+                        var idsec = `#${$scope.devicesfound[$scope.searchItemCount].slug}`;
+                        console.log("idsec", idsec)
+                        $(idsec).removeClass("intro");
+                        $scope.searchItemCount--;
+                        console.log("$scope.searchItemCount", $scope.searchItemCount)
+                        var id = `#${$scope.devicesfound[$scope.searchItemCount].slug}`;
+                        console.log(id)
+                        $(id).addClass("intro");
+                        $scope.devicename = $scope.devicesfound[$scope.searchItemCount].device_name;
+
+                    }
+
+                }
+            }
+
+            $scope.searchdevice = async (event) => {
+                $scope.showResultDiv();
                 console.log("helllo");
                 //    document.getElementById("loader").style.display = 'block';
+                console.log(event.key);
+                if (event.key != 'ArrowDown' && event.key != 'ArrowUp') {
+                    if ($scope.devicename != "") {
+                        await $http.post(
+                            "functions/user/findDevice.php", {
+                                'devicename': $scope.devicename,
+                            }
+                        ).then(function(response) {
+                            //  document.getElementById("search_div").style.display = 'block';
+                            $scope.devicesfound = response.data;
+                            console.log($scope.devicesfound);
 
-                if ($scope.devicename != "") {
-                    await $http.post(
-                        "functions/user/findDevice.php", {
-                            'devicename': $scope.devicename,
-                        }
-                    ).then(function(response) {
-                        //  document.getElementById("search_div").style.display = 'block';
-                        $scope.devicesfound = response.data;
-                        console.log($scope.devicesfound);
+                            // setTimeout(function() {
+                            //     autocomplete(document.getElementById("myInput"), $scope.devicesfound);
 
-                        // setTimeout(function() {
-                        //     autocomplete(document.getElementById("myInput"), $scope.devicesfound);
+                            //    // document.getElementById("loader").style.display = 'none';
+                            // }, 1500);
 
-                        //    // document.getElementById("loader").style.display = 'none';
-                        // }, 1500);
-
-                        let divId = $scope.devicesfound[0].slug;
+                            let divId = $scope.devicesfound[0].slug;
 
 
-                    });
-                } else {
-                    $scope.devicesfound = "";
+                        });
+                    } else {
+                        $scope.devicesfound = [];
+                    }
+                    $scope.searchItemCount = 0;
                 }
+
             }
 
             $scope.chech_eg = () => {
