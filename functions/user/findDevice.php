@@ -9,7 +9,9 @@ require('../database/config.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $output=array();
         $logindata=json_decode(file_get_contents("php://input"));
-        $devicename=$logindata->devicename;
+
+        
+        $devicename= isset($logindata->devicename) ? $logindata->devicename: '';
         
       
 

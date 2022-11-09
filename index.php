@@ -29,6 +29,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/EaselPlugin.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css">
+
+    <style>
+        .autoComplete_wrapper {
+            display: block !important;
+            position: relative;
+        }
+
+        .autoComplete_wrapper>input {
+            width: 100% !important;
+        }
+    </style>
 
 </head>
 
@@ -50,15 +62,20 @@
                         <form autocomplete="off" ng-submit="formSubmit()">
                             <div class="form-group">
                                 <label>Type your device name</label>
+
+                                <div class="autoComplete_wrapper">
+                                    <input id="autoComplete" class="autoComplete_result" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
+                                </div>
+                                <!-- 
                                 <input autocomplete="off" type="search" name="name" class="form-control" placeholder="e.g Iphone X" ng-model="devicename" ng-keyup="searchdevice($event)" autocomplete="false" ng-keydown="myFunc($event)" ng-blur="searchRemove()">
 
                                 <div id="search_div" class="search_div_box">
                                     <span class="search_feed_span" ng-repeat="device in devicesfound" id="{{device.slug}}">
-                                        <!-- <center> <img src="images/loading.svg" id="loader" class="text-center" alt="" width="30px" style="display: none;"></center> -->
+                                
                                         <img src="{{device.device_img}}" height="20px" width="auto" alt="" style="display:inline-block">
                                         <a tabindex="-1" href="repair.php?device={{device.slug}}" class="search_feed ">{{device.device_name}} </a>
                                     </span>
-                                </div>
+                                </div> -->
 
 
                                 <!-- <input autocomplete="off" type="search" name="name" oninput='onInput()' class="form-control" placeholder="e.g Iphone X" ng-model="devicename" id="search-input" ng-keyup="searchdevice()" autocomplete="false" list="brow">
@@ -754,7 +771,10 @@
 
 
     <script>
-
+        const shoow = (slug) => {
+            window.location.href = `repair.php?device=${slug}`;
+            console.log("sadasd")
+        }
     </script>
 
 
@@ -819,6 +839,22 @@
                     }
 
                 }
+            }
+
+
+            $scope.searchdeviceResult = async (res) => {
+
+
+
+                let response = await $http.post(
+                    "functions/user/findDevice.php", {
+                        'devicename': res,
+                    }
+                )
+                console.log("data", response.data);
+                return response.data;
+
+
             }
 
             $scope.searchdevice = async (event) => {
@@ -904,6 +940,89 @@
                 console.log(slug);
                 window.location.href = `repair.php?device=${slug}`;
             }
+
+            $scope.shoow = () => {
+                console.log("asasd")
+            }
+
+            $scope.counnnt = 0;
+            const autoCompleteJS = new autoComplete({
+                selector: "#autoComplete",
+                placeHolder: "Search Devices...",
+                data: {
+
+                    src: async (query) => {
+                        try {
+                            // Fetch Data from external Source
+                            var data = await $scope.searchdeviceResult(query);
+                            // Data should be an array of `Objects` or `Strings`
+
+                            return data;
+                        } catch (error) {
+                            return error;
+                        }
+                    },
+                    // Data source 'Object' key to be searched
+                    keys: ["device_name"]
+
+
+
+                    // src: async (query) => {
+                    //     var data = await $scope.searchdeviceResult(query);
+                    //     result = {
+                    //         results: data
+                    //     }
+                    //     console.log("array  ", data);
+                    //     return data;
+                    // },
+                    // key: ['device_name'],
+
+                },
+                resultsList: {
+                    tag: "ul",
+                    id: "autoComplete_list",
+                    class: "results_list",
+                    destination: "#autoComplete",
+                    position: "afterend",
+                    maxResults: 5,
+                    noResults: true,
+                    element: (list, data) => {
+
+                        list.setAttribute("data-parent", 'device_name');
+
+                    },
+                },
+                resultItem: {
+                    tag: "li",
+                    class: "autoComplete_result",
+                    element: (item, data) => {
+                        console.log(item);
+                        console.log("Data--->", data.value);
+                        item.setAttribute("data-parent", data.value.device_name);
+                        item.setAttribute("data-redirect", data.value.slug);
+                        item.setAttribute("onclick", `shoow('${data.value.slug}')`);
+
+
+
+                    },
+                    highlight: "autoComplete_highlight",
+                    selected: "autoComplete_selected",
+                    submit: true,
+                },
+                events: {
+                    input: {
+                        selection: (event) => {
+                            const selection = event.detail.selection.value.device_name;
+                            const slug = event.detail.selection.value.slug;
+                            autoCompleteJS.input.value = selection;
+                            window.location.href = `repair.php?device=${slug}`;
+                        }
+                    },
+
+
+                }
+            });
+
 
 
         });
@@ -1024,6 +1143,7 @@
     </script>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
 
     <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-8216c69d01441f36c0ea791ae2d4469f0f8ff5326f00ae2d00e4bb7d20e24edb.js">
     </script>
